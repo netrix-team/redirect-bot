@@ -10,14 +10,6 @@ class WhiteList(commands.Cog):
     def __init__(self, bot: commands.InteractionBot):
         self.bot = bot
 
-    @commands.slash_command(name='owner', dm_permission=False)
-    async def botOwner(self, inter: disnake.ApplicationCommandInteraction):
-        await inter.response.defer(ephemeral=True)
-
-        profile_url: str = 'https://discord.com/users/461219084802195477'
-        message = f'Owner of the bot: [x4zx](<{profile_url}>)'
-        await inter.edit_original_response(content=message)
-
     @commands.has_permissions(administrator=True)
     @commands.slash_command(name='whitelist', dm_permission=False)
     async def whitelist(self, _: disnake.ApplicationCommandInteraction):

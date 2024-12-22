@@ -21,10 +21,7 @@ intents.message_content = True
 class ReDirect(commands.InteractionBot):
     def __init__(self):
         super().__init__(
-            intents=intents,
-            test_guilds=[1319660169587720192,
-                         1177022502141186158,
-                         642846127288483850]
+            intents=intents
         )
 
     def load_extensions(self, path: str):
