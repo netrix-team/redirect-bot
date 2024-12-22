@@ -49,17 +49,17 @@ class WhiteList(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if guild is None:
             return await inter.edit_original_response(
-                content='This guild not found!')
+                content='📛 This guild not found!')
         
         existing_guild_ids = {element.id for element in guild.whitelist}
         if guild_id in existing_guild_ids:
             return await inter.edit_original_response(
-                content='Guild already in whitelist')
+                content='📛 Guild already in whitelist')
         
         guilds = {guild.id for guild in self.bot.guilds}
         if guild_id not in guilds:
             return await inter.edit_original_response(
-                content='The bot must be present at the specified guild')
+                content='📛 The bot must be present at the specified guild')
         
         guild_obj = self.bot.get_guild(guild_id)
 
@@ -68,7 +68,7 @@ class WhiteList(commands.Cog):
         )
         await guild.save()
 
-        await inter.edit_original_response('Successful guild update')
+        await inter.edit_original_response('✅ Successful guild update')
 
     @whitelist.sub_command(
         name='list',
@@ -85,14 +85,14 @@ class WhiteList(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if guild is None:
             return await inter.edit_original_response(
-                content='This guild not found!')
+                content='📛 This guild not found!')
 
         description: str = ''
         whitelist = guild.whitelist
 
         if not whitelist:
             return await inter.edit_original_response(
-                content='WhiteList is empty')
+                content='📛 WhiteList is empty')
 
         for i, element in enumerate(whitelist):
             description += f'`#{i+1}` {element.name} ({element.id})\n'
@@ -128,7 +128,7 @@ class WhiteList(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if guild is None:
             return await inter.edit_original_response(
-                content='This guild not found!')
+                content='📛 This guild not found!')
 
         whitelist = guild.whitelist
 
@@ -138,7 +138,7 @@ class WhiteList(commands.Cog):
                 await guild.save()
 
                 return await inter.edit_original_response(
-                    content='Guild successfully removed from whitelist')
+                    content='✅ Guild successfully removed from whitelist')
 
         return await inter.edit_original_response(
-            content='Guild not found in whitelist')
+            content='📛 Guild not found in whitelist')
