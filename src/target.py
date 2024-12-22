@@ -1,5 +1,6 @@
 import disnake
 from disnake.ext import commands
+from disnake.ext.commands import CommandError
 
 from .db.func import get_guild_model
 from .db.models import TargetChannel, Settings
@@ -14,6 +15,14 @@ class Target(commands.Cog):
     @commands.slash_command(name='target', dm_permission=False)
     async def target(self, inter: disnake.ApplicationCommandInteraction):
         return
+    
+    @target.error
+    async def target_error(self,
+        inter: disnake.ApplicationCommandInteraction, error: CommandError):
+
+        if isinstance(error, commands.MissingPermissions):
+            return await inter.response.send_message(
+                '📛 This command is not available to you!', ephemeral=True)
     
     @target.sub_command('add', 'Add a new target channel to a source channel')
     async def target_add(self, inter: disnake.ApplicationCommandInteraction,

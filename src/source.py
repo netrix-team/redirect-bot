@@ -1,5 +1,6 @@
 import disnake
 from disnake.ext import commands
+from disnake.ext.commands import CommandError
 
 from .db.func import get_guild_model
 from .db.models import SourceChannel
@@ -13,6 +14,14 @@ class Source(commands.Cog):
     @commands.slash_command(name='source', dm_permission=False)
     async def source(self, inter: disnake.ApplicationCommandInteraction):
         return
+    
+    @source.error
+    async def source_error(self,
+        inter: disnake.ApplicationCommandInteraction, error: CommandError):
+
+        if isinstance(error, commands.MissingPermissions):
+            return await inter.response.send_message(
+                '📛 This command is not available to you!', ephemeral=True)
     
     @source.sub_command('add', 'Add a new source channel')
     async def source_add(self, inter: disnake.ApplicationCommandInteraction,
