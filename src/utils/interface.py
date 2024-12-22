@@ -37,6 +37,12 @@ class Interface(disnake.ui.View):
         self.settings.allowed_bots = not self.settings.allowed_bots
         await self.guild.save()
 
+        for button in self.children:
+            button.disabled = True
+
+        if self.message:
+            await self.message.edit(view=self)
+
         await inter.response.send_message(
             content=('✅ Allowed Bots set to '
                     f'{self.settings.allowed_bots}'),
@@ -50,6 +56,12 @@ class Interface(disnake.ui.View):
     ):
         modal = ExtensionModal(self.settings, self.guild)
         await inter.response.send_modal(modal)
+
+        for button in self.children:
+            button.disabled = True
+
+        if self.message:
+            await self.message.edit(view=self)
 
     @disnake.ui.select(
         placeholder='Select Content Type',
@@ -67,10 +79,17 @@ class Interface(disnake.ui.View):
         select: disnake.ui.Select, inter: disnake.MessageInteraction
     ):
         self.settings.content_type = int(select.values[0])
-
         await self.guild.save()
+
+        for button in self.children:
+            button.disabled = True
+
+        if self.message:
+            await self.message.edit(view=self)
+
         await inter.response.send_message(
-            content=f'✅ Content Type set to {CONTENT_TYPE_MAPPING[int(select.values[0])]}', 
+            content=('✅ Content Type set to '
+                     f'{CONTENT_TYPE_MAPPING[int(select.values[0])]}'), 
             ephemeral=True)
 
 

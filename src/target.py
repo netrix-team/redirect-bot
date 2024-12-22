@@ -152,8 +152,8 @@ class Target(commands.Cog):
         embed = disnake.Embed(
             title='Target Channel Settings',
             description=('Settings for:\n'
-                         f'- **{target_channel.name}**\n'
-                         f'- `{target_channel.id}`'),
+                         f'**{target_channel.name}**'
+                         f' (`{target_channel.id}`)'),
             colour=0x7f3bf5
         )
         embed.add_field(name='Allowed Bots',
