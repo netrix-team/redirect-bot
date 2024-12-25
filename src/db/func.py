@@ -19,8 +19,8 @@ async def update_guild_model(guild_id: int, **kwargs) -> bool:
         return False
 
     updates = {
-        field: value for field, value in kwargs.items() 
-        if field != 'id' and hasattr(guild, field) 
+        field: value for field, value in kwargs.items()
+        if field != 'id' and hasattr(guild, field)
         and getattr(guild, field) != value
     }
 

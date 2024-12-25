@@ -89,7 +89,7 @@ class Interface(disnake.ui.View):
 
         await inter.response.send_message(
             content=('✅ Content Type set to '
-                     f'{CONTENT_TYPE_MAPPING[int(select.values[0])]}'), 
+                     f'{CONTENT_TYPE_MAPPING[int(select.values[0])]}'),
             ephemeral=True)
 
 
@@ -106,7 +106,7 @@ class ExtensionModal(disnake.ui.Modal):
                     label='Allowed Extensions',
                     custom_id='extensions',
                     placeholder='e.g., jpg, png, gif or all',
-                    value=', '.join(settings.allowed_extensions) 
+                    value=', '.join(settings.allowed_extensions)
                     if settings.allowed_extensions else '',
 
                     style=disnake.TextInputStyle.short,
@@ -116,23 +116,28 @@ class ExtensionModal(disnake.ui.Modal):
             timeout=60
         )
 
-
     async def callback(self, interaction: disnake.ModalInteraction):
         try:
             extensions_input = interaction.text_values['extensions'].strip()
 
             if extensions_input.lower() == 'all':
-                self.settings.allowed_extensions = None  # Убираем ограничения на расширения
+                self.settings.allowed_extensions = None
             else:
                 extensions = extensions_input.split(',')
-                self.settings.allowed_extensions = [ext.strip() for ext in extensions if ext.strip()]
+                self.settings.allowed_extensions = [
+                    ext.strip() for ext in extensions if ext.strip()]
 
             await self.guild.save()
 
-            allowed_extensions_display = 'All' if self.settings.allowed_extensions is None else ', '.join(self.settings.allowed_extensions)
+            if self.settings.allowed_extensions is None:
+                allowed_extensions_display = 'All'
+            else:
+                allowed_extensions_display = ', '.join(
+                    self.settings.allowed_extensions)
 
             await interaction.response.send_message(
-                content=f'✅ Extensions updated to {allowed_extensions_display}', ephemeral=True)
+                content=('✅ Extensions updated '
+                         f'to {allowed_extensions_display}'), ephemeral=True)
 
         except Exception as e:
             await interaction.response.send_message(

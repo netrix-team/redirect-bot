@@ -6,23 +6,23 @@ from pydantic import BaseModel, Field
 
 
 class ContentType(IntEnum):
-    TEXT_ONLY = 1  # Только текст
-    FILES_ONLY = 2  # Только файлы
-    EMBEDS_ONLY = 3  # Только ембеды
+    TEXT_ONLY = 1
+    FILES_ONLY = 2
+    EMBEDS_ONLY = 3
 
-    TEXT_AND_FILES = 4  # Текст и файлы
-    TEXT_AND_EMBEDS = 5  # Текст и ембеды
-    FILES_AND_EMBEDS = 6 # файлы и ембеды
+    TEXT_AND_FILES = 4
+    TEXT_AND_EMBEDS = 5
+    FILES_AND_EMBEDS = 6
 
-    ALL_CONTENT = 7  # Всё содержимое
+    ALL_CONTENT = 7
 
 
 class Settings(BaseModel):
     allowed_bots: bool = Field(False)
     content_type: ContentType = Field(ContentType.ALL_CONTENT)
     allowed_extensions: Optional[list[str]] = Field(None, description=(
-        'Если None, разрешены все файлы. Если указаны, например: ["png", ...]'
-        'то разрешены только файлы с указанными расширениями.'
+        'If None, all files are allowed. If specified, for example: '
+        '["png", ...], only files with the specified extensions are allowed.'
     ))
 
 

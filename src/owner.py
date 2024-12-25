@@ -15,4 +15,3 @@ class ForOwner(commands.Cog):
         profile_url: str = 'https://discord.com/users/461219084802195477'
         message = f'Owner of the bot: [x4zx](<{profile_url}>)'
         await inter.edit_original_response(content=message)
-

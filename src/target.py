@@ -15,7 +15,7 @@ class Target(commands.Cog):
     @commands.slash_command(name='target', dm_permission=False)
     async def target(self, inter: disnake.ApplicationCommandInteraction):
         return
-    
+
     @target.error
     async def target_error(self,
         inter: disnake.ApplicationCommandInteraction, error: CommandError):
@@ -23,20 +23,13 @@ class Target(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             return await inter.response.send_message(
                 '📛 This command is not available to you!', ephemeral=True)
-    
+
     @target.sub_command('add', 'Add a new target channel to a source channel')
     async def target_add(self, inter: disnake.ApplicationCommandInteraction,
         source: str = commands.Param(
             description='Source channel to which the target will be added'),
         target: int = commands.Param(
-            description=disnake.Localized(
-                'Channel ID to add', data={
-                    disnake.Locale.uk: 'ID каналу, для додавання',
-                    disnake.Locale.ru: 'ID канала для добавления'
-                }),
-            ge=0,
-            large=True,
-            max_length=25
+            description='Channel ID to add', ge=0, large=True, max_length=25
         ),
         content_type: int = commands.Param(
             choices={
@@ -65,35 +58,35 @@ class Target(commands.Cog):
         if not guild:
             return await inter.edit_original_response(
                 content='📛 Guild not found in the database')
-        
+
         source_channel = next(
-            (ch for ch in guild.channels 
+            (ch for ch in guild.channels
             if ch.name == source), None)
 
         if not source_channel:
             return await inter.edit_original_response(
                 content='📛 Source channel not found in the database')
-        
+
         target_channel = None
 
         try:
-            target_channel = (self.bot.get_channel(target) 
+            target_channel = (self.bot.get_channel(target)
                               or await self.bot.fetch_channel(target))
 
         except (ValueError, disnake.NotFound):
             return await inter.edit_original_response(
-                content=('📛 Invalid target channel. Please ' 
+                content=('📛 Invalid target channel. Please '
                          'provide a valid channel ID or mention'))
-        
+
         allowed_extensions_list = (
-            [ext.strip() for ext in allowed_extensions.split(',') 
+            [ext.strip() for ext in allowed_extensions.split(',')
             if ext.strip()] if allowed_extensions else None
         )
 
         if any(t.id == target_channel.id for t in source_channel.targets):
             return await inter.edit_original_response(
                 content='📛 Target channel already exists in the database')
-        
+
         if target_channel.guild.id != inter.guild.id:
             target_display = target_channel.jump_url
         else:
@@ -126,7 +119,7 @@ class Target(commands.Cog):
             ch.name for ch in guild.channels
             if user_input.lower() in ch.name.lower()
         ][:25]
-    
+
     @target.sub_command('settings', 'View target channel settings')
     async def target_settings(self,
         inter: disnake.ApplicationCommandInteraction,
@@ -139,23 +132,23 @@ class Target(commands.Cog):
         if not guild:
             return await inter.edit_original_response(
                 content='📛 Guild not found in the database')
-        
+
         source_channel = next(
-            (ch for ch in guild.channels 
+            (ch for ch in guild.channels
             if ch.name == source), None)
 
         if not source_channel:
             return await inter.edit_original_response(
                 content='📛 Source channel not found in the database')
-        
+
         target_channel = next(
-            (t for t in source_channel.targets 
+            (t for t in source_channel.targets
             if t.name == target), None)
 
         if not target_channel:
             return await inter.edit_original_response(
                 content='📛 Target channel not found in the database')
-        
+
         settings = target_channel.settings
 
         embed = disnake.Embed(
@@ -172,7 +165,7 @@ class Target(commands.Cog):
             value=CONTENT_TYPE_MAPPING[settings.content_type], inline=False)
 
         embed.add_field(name='Allowed Extensions',
-            value=', '.join(settings.allowed_extensions) 
+            value=', '.join(settings.allowed_extensions)
             if settings.allowed_extensions else 'All', inline=False)
 
         view = Interface(settings, guild)
@@ -180,7 +173,7 @@ class Target(commands.Cog):
         view.message = await inter.original_message()
 
     @target_settings.autocomplete('source')
-    async def autocomplete_sources(
+    async def autocomplete_settings_sources(
         self, inter: disnake.ApplicationCommandInteraction, user_input: str
     ):
         guild = await get_guild_model(inter.guild.id)
@@ -193,7 +186,7 @@ class Target(commands.Cog):
         ][:25]
 
     @target_settings.autocomplete('target')
-    async def autocomplete_targets(
+    async def autocomplete_settings_targets(
         self, inter: disnake.ApplicationCommandInteraction, user_input: str
     ):
         guild = await get_guild_model(inter.guild.id)
@@ -203,7 +196,7 @@ class Target(commands.Cog):
         selected_option = inter.options['settings']['source']
 
         source_channel = next(
-            (ch for ch in guild.channels 
+            (ch for ch in guild.channels
             if ch.name == selected_option), None)
 
         if not source_channel:
@@ -213,7 +206,7 @@ class Target(commands.Cog):
             t.name for t in source_channel.targets
             if user_input.lower() in t.name.lower()
         ][:25]
-    
+
     @target.sub_command('remove', 'Remove a target channel')
     async def target_remove(self,
         inter: disnake.ApplicationCommandInteraction,
@@ -226,17 +219,17 @@ class Target(commands.Cog):
         if not guild:
             return await inter.edit_original_response(
                 content='📛 Guild not found in the database')
-        
+
         source_channel = next(
-            (ch for ch in guild.channels 
+            (ch for ch in guild.channels
             if ch.name == source), None)
 
         if not source_channel:
             return await inter.edit_original_response(
                 content='📛 Source channel not found in the database')
-        
+
         target_channel = next(
-            (t for t in source_channel.targets 
+            (t for t in source_channel.targets
             if t.name == target), None)
 
         if not target_channel:
@@ -250,9 +243,9 @@ class Target(commands.Cog):
             content=('✅ Successfully removed target channel '
                      f'**{target_channel.name}** (`{target_channel.id}`) '
                      f'from source channel <#{source_channel.id}>'))
-        
+
     @target_remove.autocomplete('source')
-    async def autocomplete_sources(
+    async def autocomplete_remove_sources(
         self, inter: disnake.ApplicationCommandInteraction, user_input: str
     ):
         guild = await get_guild_model(inter.guild.id)
@@ -265,7 +258,7 @@ class Target(commands.Cog):
         ][:25]
 
     @target_remove.autocomplete('target')
-    async def autocomplete_targets(
+    async def autocomplete_remove_targets(
         self, inter: disnake.ApplicationCommandInteraction, user_input: str
     ):
         guild = await get_guild_model(inter.guild.id)
@@ -275,7 +268,7 @@ class Target(commands.Cog):
         selected_option = inter.options['remove']['source']
 
         source_channel = next(
-            (ch for ch in guild.channels 
+            (ch for ch in guild.channels
             if ch.name == selected_option), None)
 
         if not source_channel:

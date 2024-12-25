@@ -14,7 +14,7 @@ class Source(commands.Cog):
     @commands.slash_command(name='source', dm_permission=False)
     async def source(self, inter: disnake.ApplicationCommandInteraction):
         return
-    
+
     @source.error
     async def source_error(self,
         inter: disnake.ApplicationCommandInteraction, error: CommandError):
@@ -22,7 +22,7 @@ class Source(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             return await inter.response.send_message(
                 '📛 This command is not available to you!', ephemeral=True)
-    
+
     @source.sub_command('add', 'Add a new source channel')
     async def source_add(self, inter: disnake.ApplicationCommandInteraction,
         source: disnake.TextChannel = commands.Param(
@@ -34,17 +34,17 @@ class Source(commands.Cog):
         if not guild:
             return await inter.edit_original_response(
                 content='📛 Guild not found in the database')
-        
+
         if any(source.id == channel.id for channel in guild.channels):
             return await inter.edit_original_response(
                 content='📛 The source channel already exists in the database')
-        
+
         guild.channels.append(SourceChannel(id=source.id, name=source.name))
         await guild.save()
 
         await inter.edit_original_response(
             content=f'✅ Successfully added source channel {source.mention}')
-        
+
     @source.sub_command('links', 'View current source channel links')
     async def source_links(self, inter: disnake.ApplicationCommandInteraction):
         await inter.response.defer(ephemeral=True)
@@ -53,11 +53,11 @@ class Source(commands.Cog):
         if not guild:
             return await inter.edit_original_response(
                 content='📛 Guild not found in the database')
-        
+
         if not guild.channels:
             return await inter.edit_original_response(
                 content='📛 No links channels are configured')
-        
+
         def build_ascii_tree(source: str, targets: list[str] = None):
             if not targets:
                 return source
@@ -67,7 +67,7 @@ class Source(commands.Cog):
                 connector = '└─ ' if i == len(targets) - 1 else '├─ '
                 lines.append(f'{connector}{target}')
             return '\n'.join(lines)
-        
+
         descriptions: list = []
         for channel in guild.channels:
             targets = [t.name for t in channel.targets]
@@ -91,19 +91,19 @@ class Source(commands.Cog):
         if not guild:
             return await inter.edit_original_response(
                 content='📛 Guild not found in the database')
-        
+
         if not guild.channels:
             return await inter.edit_original_response(
                 content='📛 No links channels are configured')
-        
+
         channel_to_remove = next(
-            (ch for ch in guild.channels 
+            (ch for ch in guild.channels
             if ch.name == source), None)
 
         if not channel_to_remove:
             return await inter.edit_original_response(
                 content='📛 Source channel not found in the database')
-        
+
         guild.channels.remove(channel_to_remove)
         await guild.save()
 

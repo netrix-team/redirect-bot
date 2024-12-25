@@ -14,7 +14,7 @@ class WhiteList(commands.Cog):
     @commands.slash_command(name='whitelist', dm_permission=False)
     async def whitelist(self, _: disnake.ApplicationCommandInteraction):
         return
-    
+
     @whitelist.error
     async def whitelist_error(
         self, inter: disnake.ApplicationCommandInteraction,
@@ -25,23 +25,12 @@ class WhiteList(commands.Cog):
                 '📛 This command is not available to you!', ephemeral=True)
 
     @whitelist.sub_command(
-        name='add',
-        description=disnake.Localized('Add new guild to whitelist', data={
-            disnake.Locale.uk: 'Додати новий сервер у вайтлист',
-            disnake.Locale.ru: 'Добавить новый сервер в вайтлист'
-        })
+        name='add', description='Add new guild to whitelist'
     )
     async def add(
         self, inter: disnake.ApplicationCommandInteraction,
         guild_id: int = commands.Param(
-            description=disnake.Localized(
-                'Guild ID to add', data={
-                    disnake.Locale.uk: 'ID сервера, для додавання',
-                    disnake.Locale.ru: 'ID сервера для добавления'
-                }),
-            ge=0,
-            large=True,
-            max_length=25
+            description='Guild ID to add', ge=0, large=True, max_length=25
         )
     ):
         await inter.response.defer(ephemeral=True)
@@ -50,17 +39,17 @@ class WhiteList(commands.Cog):
         if guild is None:
             return await inter.edit_original_response(
                 content='📛 This guild not found!')
-        
+
         existing_guild_ids = {element.id for element in guild.whitelist}
         if guild_id in existing_guild_ids:
             return await inter.edit_original_response(
                 content='📛 Guild already in whitelist')
-        
+
         guilds = {guild.id for guild in self.bot.guilds}
         if guild_id not in guilds:
             return await inter.edit_original_response(
                 content='📛 The bot must be present at the specified guild')
-        
+
         guild_obj = self.bot.get_guild(guild_id)
 
         guild.whitelist.append(WhiteListElement(
@@ -71,11 +60,7 @@ class WhiteList(commands.Cog):
         await inter.edit_original_response('✅ Successful guild update')
 
     @whitelist.sub_command(
-        name='list',
-        description=disnake.Localized('Viewing the current list', data={
-            disnake.Locale.uk: 'Перегляд поточного списку',
-            disnake.Locale.ru: 'Просмотр текущего списка'
-        })
+        name='list', description='Viewing the current list'
     )
     async def list(
         self, inter: disnake.ApplicationCommandInteraction
@@ -95,7 +80,7 @@ class WhiteList(commands.Cog):
                 content='📛 WhiteList is empty')
 
         for i, element in enumerate(whitelist):
-            description += f'`#{i+1}` {element.name} ({element.id})\n'
+            description += f'`#{i + 1}` {element.name} ({element.id})\n'
 
         embed = disnake.Embed(
             title='Current WhiteList', description=description, colour=0x2b2d31
@@ -104,23 +89,12 @@ class WhiteList(commands.Cog):
         await inter.edit_original_response(embed=embed)
 
     @whitelist.sub_command(
-        name='remove',
-        description=disnake.Localized('Remove guild from whitelist', data={
-            disnake.Locale.uk: 'Видалити сервер з вайтлиста',
-            disnake.Locale.ru: 'Удалить сервер из вайтлиста'
-        })
+        name='remove', description='Remove guild from whitelist'
     )
     async def remove(
         self, inter: disnake.ApplicationCommandInteraction,
         guild_id: int = commands.Param(
-            description=disnake.Localized(
-                'Guild ID to remove', data={
-                    disnake.Locale.uk: 'ID сервера для видалення',
-                    disnake.Locale.ru: 'ID сервера для удаления'
-                }),
-            ge=0,
-            large=True,
-            max_length=25
+            description='Guild ID to remove', ge=0, large=True, max_length=25
         )
     ):
         await inter.response.defer(ephemeral=True)
