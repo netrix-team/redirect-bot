@@ -58,7 +58,7 @@ async def main():
     i18n.set('filename_format', '{locale}.{format}')
     i18n.set('skip_locale_root_data', True)
     i18n.set('file_format', 'yml')
-    i18n.set('fallback', 'en')
+    i18n.set('fallback', 'en_US')
 
     i18n.load_everything()
 
