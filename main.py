@@ -41,6 +41,9 @@ class ReDirect(commands.InteractionBot):
                     logger.error(exc)
 
     async def on_ready(self):
+        await self.change_presence(activity=disnake.Activity(
+            type=disnake.ActivityType.watching, name='your messages 👀'))
+
         print(f'BOT: {self.user}')
         print(f'ID: {self.user.id}')
         print(f'API VERSION: {disnake.__version__}')
