@@ -1,0 +1,64 @@
+{
+    "WHITELIST_COMMAND_NAME": "whitelist",
+    "WHITELIST_COMMAND_DESCRIPTION": "Керуйте списком дозволених серверів (whitelist).",
+
+    "WHITELIST_ADD_COMMAND_NAME": "add",
+    "WHITELIST_ADD_COMMAND_DESCRIPTION": "Додати новий сервер до whitelist.",
+    "WHITELIST_ADD_PARAM_GUILD_ID_NAME": "guild_id",
+    "WHITELIST_ADD_PARAM_GUILD_ID_DESCRIPTION": "ID сервера, який потрібно додати.",
+
+    "WHITELIST_LIST_COMMAND_NAME": "list",
+    "WHITELIST_LIST_COMMAND_DESCRIPTION": "Переглянути поточний whitelist.",
+
+    "WHITELIST_REMOVE_COMMAND_NAME": "remove",
+    "WHITELIST_REMOVE_COMMAND_DESCRIPTION": "Видалити сервер із whitelist.",
+    "WHITELIST_REMOVE_PARAM_GUILD_ID_NAME": "guild_id",
+    "WHITELIST_REMOVE_PARAM_GUILD_ID_DESCRIPTION": "ID сервера, який потрібно видалити.",
+
+    "TARGET_COMMAND_NAME": "target",
+    "TARGET_COMMAND_DESCRIPTION": "Керуйте цільовими каналами.",
+
+    "TARGET_ADD_COMMAND_NAME": "add",
+    "TARGET_ADD_COMMAND_DESCRIPTION": "Додати новий цільовий канал до вихідного каналу.",
+    "TARGET_ADD_PARAM_SOURCE_NAME": "source",
+    "TARGET_ADD_PARAM_SOURCE_DESCRIPTION": "Вихідний канал, до якого додається цільовий.",
+    "TARGET_ADD_PARAM_TARGET_NAME": "target",
+    "TARGET_ADD_PARAM_TARGET_DESCRIPTION": "ID каналу, який потрібно додати.",
+    "TARGET_ADD_PARAM_CONTENT_TYPE_NAME": "content_type",
+    "TARGET_ADD_PARAM_CONTENT_TYPE_DESCRIPTION": "Тип вмісту, який слід пересилати.",
+    "TARGET_ADD_PARAM_ALLOWED_BOTS_NAME": "allowed_bots",
+    "TARGET_ADD_PARAM_ALLOWED_BOTS_DESCRIPTION": "Чи дозволяти пересилання повідомлень від ботів?",
+    "TARGET_ADD_PARAM_ALLOWED_EXTENSIONS_NAME": "allowed_extensions",
+    "TARGET_ADD_PARAM_ALLOWED_EXTENSIONS_DESCRIPTION": "Список дозволених розширень файлів через кому (залиште порожнім, щоб дозволити всі).",
+
+    "TARGET_SETTINGS_COMMAND_NAME": "settings",
+    "TARGET_SETTINGS_COMMAND_DESCRIPTION": "Переглянути налаштування цільового каналу.",
+    "TARGET_SETTINGS_PARAM_SOURCE_NAME": "source",
+    "TARGET_SETTINGS_PARAM_SOURCE_DESCRIPTION": "Вихідний канал для вибору.",
+    "TARGET_SETTINGS_PARAM_TARGET_NAME": "target",
+    "TARGET_SETTINGS_PARAM_TARGET_DESCRIPTION": "Цільовий канал для вибору.",
+
+    "TARGET_REMOVE_COMMAND_NAME": "remove",
+    "TARGET_REMOVE_COMMAND_DESCRIPTION": "Видалити цільовий канал.",
+    "TARGET_REMOVE_PARAM_SOURCE_NAME": "source",
+    "TARGET_REMOVE_PARAM_SOURCE_DESCRIPTION": "Вихідний канал для вибору.",
+    "TARGET_REMOVE_PARAM_TARGET_NAME": "target",
+    "TARGET_REMOVE_PARAM_TARGET_DESCRIPTION": "Цільовий канал для вибору.",
+
+    "SOURCE_COMMAND_NAME": "source",
+    "SOURCE_COMMAND_DESCRIPTION": "Керуйте вихідними каналами.",
+
+    "SOURCE_ADD_COMMAND_NAME": "add",
+    "SOURCE_ADD_COMMAND_DESCRIPTION": "Додати новий вихідний канал.",
+    "SOURCE_ADD_PARAM_SOURCE_NAME": "source",
+    "SOURCE_ADD_PARAM_SOURCE_DESCRIPTION": "Вихідний канал, який потрібно додати.",
+
+    "SOURCE_LINKS_COMMAND_NAME": "links",
+    "SOURCE_LINKS_COMMAND_DESCRIPTION": "Переглянути поточні зв’язки вихідних каналів.",
+
+    "SOURCE_REMOVE_COMMAND_NAME": "remove",
+    "SOURCE_REMOVE_COMMAND_DESCRIPTION": "Видалити вихідний канал.",
+    "SOURCE_REMOVE_PARAM_SOURCE_NAME": "source",
+    "SOURCE_REMOVE_PARAM_SOURCE_DESCRIPTION": "Вихідний канал, який потрібно видалити."
+}
+  

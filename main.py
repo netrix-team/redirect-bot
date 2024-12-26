@@ -1,3 +1,4 @@
+import i18n
 import asyncio
 from os import listdir
 from config import config
@@ -52,7 +53,18 @@ async def main():
     # database
     await initialize()
 
+    # i18n
+    i18n.load_path.append('./src/i18n/translations')
+    i18n.set('filename_format', '{locale}.{format}')
+    i18n.set('skip_locale_root_data', True)
+    i18n.set('file_format', 'yml')
+    i18n.set('fallback', 'en')
+
+    i18n.load_everything()
+
+    # extensions & i18n
     bot.load_extension('src')
+    bot.i18n.load('./src/i18n/locale')
     await bot.start(token=TOKEN)
 
 

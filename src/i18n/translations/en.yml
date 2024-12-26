@@ -1,0 +1,25 @@
+errors:
+  missing_permissions: "📛 This command is not available to you!"
+  guild_not_found: "📛 Guild not found in the database"
+  no_links: "📛 No links channels are configured"
+  source_not_found: "📛 Source channel not found in the database"
+  source_exists: "📛 The source channel already exists in the database"
+  no_links_available: '📛 No links available'
+  invalid_target_channel: "📛 Invalid target channel. Please provide a valid channel ID or mention"
+  target_exists: "📛 Target channel already exists in the database"
+  target_not_found: "📛 Target channel not found in the database"
+  guild_already_in_whitelist: "📛 Guild already in whitelist"
+  bot_not_present: "📛 The bot must be present at the specified guild"
+  whitelist_empty: "📛 WhiteList is empty"
+  guild_not_in_whitelist: "📛 Guild not found in whitelist"
+
+info:
+  current_whitelist: "Current WhiteList"
+
+success:
+  guild_removed: "✅ Guild successfully removed from whitelist"
+  guild_update: "✅ Successful guild update"
+  target_removed: "✅ Successfully removed target channel **%{target_name}** (`%{target_id}`) from source channel <#%{source_id}>"
+  target_added: "✅ Successfully added target channel %{target} to source channel <#%{source_id}>"
+  source_added: "✅ Successfully added source channel %{channel}"
+  source_removed: "✅ Successfully removed source channel <#%{channel_id}>"
