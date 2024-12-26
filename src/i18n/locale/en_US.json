@@ -1,0 +1,64 @@
+{
+    "WHITELIST_COMMAND_NAME": "whitelist",
+    "WHITELIST_COMMAND_DESCRIPTION": "Manage your whitelist of guilds.",
+
+    "WHITELIST_ADD_COMMAND_NAME": "add",
+    "WHITELIST_ADD_COMMAND_DESCRIPTION": "Add a new guild to whitelist.",
+    "WHITELIST_ADD_PARAM_GUILD_ID_NAME": "guild_id",
+    "WHITELIST_ADD_PARAM_GUILD_ID_DESCRIPTION": "Guild ID to add.",
+
+    "WHITELIST_LIST_COMMAND_NAME": "list",
+    "WHITELIST_LIST_COMMAND_DESCRIPTION": "View the current whitelist.",
+
+    "WHITELIST_REMOVE_COMMAND_NAME": "remove",
+    "WHITELIST_REMOVE_COMMAND_DESCRIPTION": "Remove guild from whitelist.",
+    "WHITELIST_REMOVE_PARAM_GUILD_ID_NAME": "guild_id",
+    "WHITELIST_REMOVE_PARAM_GUILD_ID_DESCRIPTION": "Guild ID to remove.",
+
+    "TARGET_COMMAND_NAME": "target",
+    "TARGET_COMMAND_DESCRIPTION": "Manage your target channels.",
+
+    "TARGET_ADD_COMMAND_NAME": "add",
+    "TARGET_ADD_COMMAND_DESCRIPTION": "Add a new target channel to a source channel.",
+    "TARGET_ADD_PARAM_SOURCE_NAME": "source",
+    "TARGET_ADD_PARAM_SOURCE_DESCRIPTION": "Source channel to which the target will be added.",
+    "TARGET_ADD_PARAM_TARGET_NAME": "target",
+    "TARGET_ADD_PARAM_TARGET_DESCRIPTION": "Channel ID to add.",
+    "TARGET_ADD_PARAM_CONTENT_TYPE_NAME": "content_type",
+    "TARGET_ADD_PARAM_CONTENT_TYPE_DESCRIPTION": "Type of content to forward.",
+    "TARGET_ADD_PARAM_ALLOWED_BOTS_NAME": "allowed_bots",
+    "TARGET_ADD_PARAM_ALLOWED_BOTS_DESCRIPTION": "Whether to process bot messages.",
+    "TARGET_ADD_PARAM_ALLOWED_EXTENSIONS_NAME": "allowed_extensions",
+    "TARGET_ADD_PARAM_ALLOWED_EXTENSIONS_DESCRIPTION": "Comma-separated list of allowed file extensions (leave blank for all).",
+
+    "TARGET_SETTINGS_COMMAND_NAME": "settings",
+    "TARGET_SETTINGS_COMMAND_DESCRIPTION": "View target channel settings.",
+    "TARGET_SETTINGS_PARAM_SOURCE_NAME": "source",
+    "TARGET_SETTINGS_PARAM_SOURCE_DESCRIPTION": "Source channel to select.",
+    "TARGET_SETTINGS_PARAM_TARGET_NAME": "target",
+    "TARGET_SETTINGS_PARAM_TARGET_DESCRIPTION": "Target channel to select.",
+
+    "TARGET_REMOVE_COMMAND_NAME": "remove",
+    "TARGET_REMOVE_COMMAND_DESCRIPTION": "Remove a target channel.",
+    "TARGET_REMOVE_PARAM_SOURCE_NAME": "source",
+    "TARGET_REMOVE_PARAM_SOURCE_DESCRIPTION": "Source channel to select.",
+    "TARGET_REMOVE_PARAM_TARGET_NAME": "target",
+    "TARGET_REMOVE_PARAM_TARGET_DESCRIPTION": "Target channel to select.",
+
+    "SOURCE_COMMAND_NAME": "source",
+    "SOURCE_COMMAND_DESCRIPTION": "Manage your source channels.",
+
+    "SOURCE_ADD_COMMAND_NAME": "add",
+    "SOURCE_ADD_COMMAND_DESCRIPTION": "Add a new source channel.",
+    "SOURCE_ADD_PARAM_SOURCE_NAME": "source",
+    "SOURCE_ADD_PARAM_SOURCE_DESCRIPTION": "Source channel to add.",
+
+    "SOURCE_LINKS_COMMAND_NAME": "links",
+    "SOURCE_LINKS_COMMAND_DESCRIPTION": "View current source channel links.",
+
+    "SOURCE_REMOVE_COMMAND_NAME": "remove",
+    "SOURCE_REMOVE_COMMAND_DESCRIPTION": "Remove a source channel.",
+    "SOURCE_REMOVE_PARAM_SOURCE_NAME": "source",
+    "SOURCE_REMOVE_PARAM_SOURCE_DESCRIPTION": "Source channel to remove."
+}
+  

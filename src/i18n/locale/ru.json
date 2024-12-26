@@ -1,0 +1,63 @@
+{
+    "WHITELIST_COMMAND_NAME": "whitelist",
+    "WHITELIST_COMMAND_DESCRIPTION": "Управление списком разрешённых серверов (whitelist).",
+  
+    "WHITELIST_ADD_COMMAND_NAME": "add",
+    "WHITELIST_ADD_COMMAND_DESCRIPTION": "Добавить новый сервер в whitelist.",
+    "WHITELIST_ADD_PARAM_GUILD_ID_NAME": "guild_id",
+    "WHITELIST_ADD_PARAM_GUILD_ID_DESCRIPTION": "ID сервера, который нужно добавить.",
+
+    "WHITELIST_LIST_COMMAND_NAME": "list",
+    "WHITELIST_LIST_COMMAND_DESCRIPTION": "Просмотреть текущий список whitelist.",
+  
+    "WHITELIST_REMOVE_COMMAND_NAME": "remove",
+    "WHITELIST_REMOVE_COMMAND_DESCRIPTION": "Удалить сервер из whitelist.",
+    "WHITELIST_REMOVE_PARAM_GUILD_ID_NAME": "guild_id",
+    "WHITELIST_REMOVE_PARAM_GUILD_ID_DESCRIPTION": "ID сервера, который нужно удалить.",
+
+    "TARGET_COMMAND_NAME": "target",
+    "TARGET_COMMAND_DESCRIPTION": "Управление целевыми каналами.",
+
+    "TARGET_ADD_COMMAND_NAME": "add",
+    "TARGET_ADD_COMMAND_DESCRIPTION": "Добавить новый целевой канал к исходному каналу.",
+    "TARGET_ADD_PARAM_SOURCE_NAME": "source",
+    "TARGET_ADD_PARAM_SOURCE_DESCRIPTION": "Исходный канал, к которому будет добавлен целевой.",
+    "TARGET_ADD_PARAM_TARGET_NAME": "target",
+    "TARGET_ADD_PARAM_TARGET_DESCRIPTION": "ID канала, который нужно добавить.",
+    "TARGET_ADD_PARAM_CONTENT_TYPE_NAME": "content_type",
+    "TARGET_ADD_PARAM_CONTENT_TYPE_DESCRIPTION": "Тип контента, который нужно пересылать.",
+    "TARGET_ADD_PARAM_ALLOWED_BOTS_NAME": "allowed_bots",
+    "TARGET_ADD_PARAM_ALLOWED_BOTS_DESCRIPTION": "Разрешить ли пересылку сообщений от ботов.",
+    "TARGET_ADD_PARAM_ALLOWED_EXTENSIONS_NAME": "allowed_extensions",
+    "TARGET_ADD_PARAM_ALLOWED_EXTENSIONS_DESCRIPTION": "Список разрешённых расширений файлов через запятую (оставьте пустым, чтобы разрешить все).",
+
+    "TARGET_SETTINGS_COMMAND_NAME": "settings",
+    "TARGET_SETTINGS_COMMAND_DESCRIPTION": "Просмотреть настройки целевого канала.",
+    "TARGET_SETTINGS_PARAM_SOURCE_NAME": "source",
+    "TARGET_SETTINGS_PARAM_SOURCE_DESCRIPTION": "Исходный канал, который нужно выбрать.",
+    "TARGET_SETTINGS_PARAM_TARGET_NAME": "target",
+    "TARGET_SETTINGS_PARAM_TARGET_DESCRIPTION": "Целевой канал, который нужно выбрать.",
+
+    "TARGET_REMOVE_COMMAND_NAME": "remove",
+    "TARGET_REMOVE_COMMAND_DESCRIPTION": "Удалить целевой канал.",
+    "TARGET_REMOVE_PARAM_SOURCE_NAME": "source",
+    "TARGET_REMOVE_PARAM_SOURCE_DESCRIPTION": "Исходный канал, который нужно выбрать.",
+    "TARGET_REMOVE_PARAM_TARGET_NAME": "target",
+    "TARGET_REMOVE_PARAM_TARGET_DESCRIPTION": "Целевой канал, который нужно выбрать.",
+
+    "SOURCE_COMMAND_NAME": "source",
+    "SOURCE_COMMAND_DESCRIPTION": "Управление исходными каналами.",
+
+    "SOURCE_ADD_COMMAND_NAME": "add",
+    "SOURCE_ADD_COMMAND_DESCRIPTION": "Добавить новый исходный канал.",
+    "SOURCE_ADD_PARAM_SOURCE_NAME": "source",
+    "SOURCE_ADD_PARAM_SOURCE_DESCRIPTION": "Исходный канал, который нужно добавить.",
+
+    "SOURCE_LINKS_COMMAND_NAME": "links",
+    "SOURCE_LINKS_COMMAND_DESCRIPTION": "Просмотр текущих связей исходных каналов.",
+
+    "SOURCE_REMOVE_COMMAND_NAME": "remove",
+    "SOURCE_REMOVE_COMMAND_DESCRIPTION": "Удалить исходный канал.",
+    "SOURCE_REMOVE_PARAM_SOURCE_NAME": "source",
+    "SOURCE_REMOVE_PARAM_SOURCE_DESCRIPTION": "Исходный канал, который нужно удалить."
+}

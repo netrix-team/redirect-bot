@@ -1,5 +1,8 @@
+import i18n
+
 import disnake
 from disnake.ext import commands
+from disnake.i18n import Localized
 from disnake.ext.commands import CommandError
 
 from .db.func import get_guild_model
@@ -12,26 +15,69 @@ class Target(commands.Cog):
         self.bot = bot
 
     @commands.has_permissions(administrator=True)
-    @commands.slash_command(name='target', dm_permission=False)
+    @commands.slash_command(
+        name=Localized(
+            string='target',
+            key='TARGET_COMMAND_NAME'
+        ),
+        dm_permission=False
+    )
     async def target(self, inter: disnake.ApplicationCommandInteraction):
         return
 
     @target.error
-    async def target_error(self,
-        inter: disnake.ApplicationCommandInteraction, error: CommandError):
+    async def target_error(
+        self,
+        inter: disnake.ApplicationCommandInteraction,
+        error: CommandError
+    ):
+        locale = str(inter.locale.name)
 
         if isinstance(error, commands.MissingPermissions):
             return await inter.response.send_message(
-                '📛 This command is not available to you!', ephemeral=True)
+                i18n.t('global.errors.forbidden', locale=locale),
+                ephemeral=True)
 
-    @target.sub_command('add', 'Add a new target channel to a source channel')
+    @target.sub_command(
+        name=Localized(
+            string='add',
+            key='TARGET_ADD_COMMAND_NAME'
+        ),
+        description=Localized(
+            string='Add a new target channel to a source channel',
+            key='TARGET_ADD_COMMAND_DESCRIPTION'
+        )
+    )
     async def target_add(self, inter: disnake.ApplicationCommandInteraction,
         source: str = commands.Param(
-            description='Source channel to which the target will be added'),
+            name=Localized(
+                string='source',
+                key='TARGET_ADD_PARAM_SOURCE_NAME'
+            ),
+            description=Localized(
+                string='Source channel to which the target will be added',
+                key='TARGET_ADD_PARAM_SOURCE_DESCRIPTION'
+            )
+        ),
         target: int = commands.Param(
-            description='Channel ID to add', ge=0, large=True, max_length=25
+            name=Localized(
+                string='target',
+                key='TARGET_ADD_PARAM_TARGET_NAME'
+            ),
+            description=Localized(
+                string='Channel ID to add',
+                key='TARGET_ADD_PARAM_TARGET_DESCRIPTION'
+            ), ge=0, large=True, max_length=25
         ),
         content_type: int = commands.Param(
+            name=Localized(
+                string='content_type',
+                key='TARGET_ADD_PARAM_CONTENT_TYPE_NAME'
+            ),
+            description=Localized(
+                string='Type of content to forward',
+                key='TARGET_ADD_PARAM_CONTENT_TYPE_DESCRIPTION'
+            ),
             choices={
                 'Text Only': 1,
                 'Files Only': 2,
@@ -41,23 +87,39 @@ class Target(commands.Cog):
                 'Files and Embeds': 6,
                 'All Content': 7
             },
-            description='Type of content to forward'
         ),
         allowed_bots: bool = commands.Param(
-            default=False, description='Whether to process bot messages'),
+            default=False,
+            name=Localized(
+                string='allowed_bots',
+                key='TARGET_ADD_PARAM_ALLOWED_BOTS_NAME'
+            ),
+            description=Localized(
+                string='Whether to process bot messages',
+                key='TARGET_ADD_PARAM_ALLOWED_BOTS_DESCRIPTION'
+            )
+        ),
         allowed_extensions: str = commands.Param(
-            default=None, description=('Comma-separated list of '
-                                       'allowed file extensions, or '
-                                       'leave blank for all files '
-                                       'e.g., jpg, png, gif')
+            default=None,
+            name=Localized(
+                string='allowed_extensions',
+                key='TARGET_ADD_PARAM_ALLOWED_EXTENSIONS_NAME'
+            ),
+            description=Localized(
+                string=('Comma-separated list of '
+                        'allowed file extensions (leave blank for all)'),
+                key='TARGET_ADD_PARAM_ALLOWED_EXTENSIONS_DESCRIPTION'
+            )
         )
     ):
+        locale = str(inter.locale.name)
         await inter.response.defer(ephemeral=True)
 
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content='📛 Guild not found in the database')
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
+            )
 
         source_channel = next(
             (ch for ch in guild.channels
@@ -65,7 +127,8 @@ class Target(commands.Cog):
 
         if not source_channel:
             return await inter.edit_original_response(
-                content='📛 Source channel not found in the database')
+                content=i18n.t('source.errors.source_not_found', locale=locale)
+            )
 
         target_channel = None
 
@@ -75,8 +138,9 @@ class Target(commands.Cog):
 
         except (ValueError, disnake.NotFound):
             return await inter.edit_original_response(
-                content=('📛 Invalid target channel. Please '
-                         'provide a valid channel ID or mention'))
+                content=i18n.t('target.errors.invalid_target_channel',
+                               locale=locale)
+            )
 
         allowed_extensions_list = (
             [ext.strip() for ext in allowed_extensions.split(',')
@@ -85,7 +149,8 @@ class Target(commands.Cog):
 
         if any(t.id == target_channel.id for t in source_channel.targets):
             return await inter.edit_original_response(
-                content='📛 Target channel already exists in the database')
+                content=i18n.t('target.errors.target_exists', locale=locale)
+            )
 
         if target_channel.guild.id != inter.guild.id:
             target_display = target_channel.jump_url
@@ -103,13 +168,20 @@ class Target(commands.Cog):
         ))
         await guild.save()
 
-        await inter.edit_original_response(
-            content=(f'✅ Successfully added target channel {target_display}'
-                     f' to source channel <#{source_channel.id}>'))
+        return await inter.edit_original_response(
+            content=i18n.t(
+                'target.success.target_added',
+                locale=locale,
+                target=target_display,
+                source_id=source_channel.id
+            )
+        )
 
     @target_add.autocomplete('source')
-    async def target_add_autocomplete(self,
-        inter: disnake.ApplicationCommandInteraction, user_input: str
+    async def target_add_autocomplete(
+        self,
+        inter: disnake.ApplicationCommandInteraction,
+        user_input: str
     ):
         guild = await get_guild_model(inter.guild.id)
         if not guild or not guild.channels:
@@ -120,18 +192,48 @@ class Target(commands.Cog):
             if user_input.lower() in ch.name.lower()
         ][:25]
 
-    @target.sub_command('settings', 'View target channel settings')
-    async def target_settings(self,
+    @target.sub_command(
+        name=Localized(
+            string='settings',
+            key='TARGET_SETTINGS_COMMAND_NAME'
+        ),
+        description=Localized(
+            string='View target channel settings',
+            key='TARGET_SETTINGS_COMMAND_DESCRIPTION'
+        )
+    )
+    async def target_settings(
+        self,
         inter: disnake.ApplicationCommandInteraction,
-        source: str = commands.Param(description='Source channel to select'),
-        target: str = commands.Param(description='Target channel to select')
+        source: str = commands.Param(
+            name=Localized(
+                string='source',
+                key='TARGET_SETTINGS_PARAM_SOURCE_NAME'
+            ),
+            description=Localized(
+                string='Source channel to select',
+                key='TARGET_SETTINGS_PARAM_SOURCE_DESCRIPTION'
+            )
+        ),
+        target: str = commands.Param(
+            name=Localized(
+                string='target',
+                key='TARGET_SETTINGS_PARAM_TARGET_NAME'
+            ),
+            description=Localized(
+                string='Target channel to select',
+                key='TARGET_SETTINGS_PARAM_TARGET_DESCRIPTION'
+            )
+        )
     ):
+        locale = str(inter.locale.name)
         await inter.response.defer(ephemeral=True)
 
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content='📛 Guild not found in the database')
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
+            )
 
         source_channel = next(
             (ch for ch in guild.channels
@@ -139,7 +241,8 @@ class Target(commands.Cog):
 
         if not source_channel:
             return await inter.edit_original_response(
-                content='📛 Source channel not found in the database')
+                content=i18n.t('source.errors.source_not_found', locale=locale)
+            )
 
         target_channel = next(
             (t for t in source_channel.targets
@@ -147,7 +250,8 @@ class Target(commands.Cog):
 
         if not target_channel:
             return await inter.edit_original_response(
-                content='📛 Target channel not found in the database')
+                content=i18n.t('target.errors.target_not_found', locale=locale)
+            )
 
         settings = target_channel.settings
 
@@ -207,18 +311,48 @@ class Target(commands.Cog):
             if user_input.lower() in t.name.lower()
         ][:25]
 
-    @target.sub_command('remove', 'Remove a target channel')
-    async def target_remove(self,
+    @target.sub_command(
+        name=Localized(
+            string='name',
+            key='TARGET_REMOVE_COMMAND_NAME'
+        ),
+        description=Localized(
+            string='Remove a target channel',
+            key='TARGET_REMOVE_COMMAND_DESCRIPTION'
+        )
+    )
+    async def target_remove(
+        self,
         inter: disnake.ApplicationCommandInteraction,
-        source: str = commands.Param(description='Source channel to select'),
-        target: str = commands.Param(description='Target channel to select')
+        source: str = commands.Param(
+            name=Localized(
+                string='source',
+                key='TARGET_REMOVE_PARAM_SOURCE_NAME'
+            ),
+            description=Localized(
+                string='Source channel to select',
+                key='TARGET_REMOVE_PARAM_SOURCE_DESCRIPTION'
+            )
+        ),
+        target: str = commands.Param(
+            name=Localized(
+                string='target',
+                key='TARGET_REMOVE_PARAM_TARGET_NAME'
+            ),
+            description=Localized(
+                string='Target channel to select',
+                key='TARGET_REMOVE_PARAM_TARGET_DESCRIPTION'
+            )
+        )
     ):
+        locale = str(inter.locale.name)
         await inter.response.defer(ephemeral=True)
 
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content='📛 Guild not found in the database')
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
+            )
 
         source_channel = next(
             (ch for ch in guild.channels
@@ -226,7 +360,8 @@ class Target(commands.Cog):
 
         if not source_channel:
             return await inter.edit_original_response(
-                content='📛 Source channel not found in the database')
+                content=i18n.t('source.errors.source_not_found', locale=locale)
+            )
 
         target_channel = next(
             (t for t in source_channel.targets
@@ -234,15 +369,21 @@ class Target(commands.Cog):
 
         if not target_channel:
             return await inter.edit_original_response(
-                content='📛 Target channel not found in the database')
+                content=i18n.t('target.errors.target_not_found', locale=locale)
+            )
 
         source_channel.targets.remove(target_channel)
         await guild.save()
 
-        await inter.edit_original_response(
-            content=('✅ Successfully removed target channel '
-                     f'**{target_channel.name}** (`{target_channel.id}`) '
-                     f'from source channel <#{source_channel.id}>'))
+        return await inter.edit_original_response(
+            content=i18n.t(
+                'target.success.target_removed',
+                locale=locale,
+                target_name=target_channel.name,
+                target_id=target_channel.id,
+                source_id=source_channel.id
+            )
+        )
 
     @target_remove.autocomplete('source')
     async def autocomplete_remove_sources(
