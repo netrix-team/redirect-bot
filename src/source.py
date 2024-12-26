@@ -34,7 +34,7 @@ class Source(commands.Cog):
 
         if isinstance(error, commands.MissingPermissions):
             return await inter.response.send_message(
-                i18n.t('errors.missing_permissions', locale=locale),
+                i18n.t('global.errors.forbidden', locale=locale),
                 ephemeral=True)
 
     @source.sub_command(
@@ -67,19 +67,19 @@ class Source(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content=i18n.t('errors.guild_not_found', locale=locale)
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
 
         if any(source.id == channel.id for channel in guild.channels):
             return await inter.edit_original_response(
-                content=i18n.t('errors.source_exists', locale=locale)
+                content=i18n.t('sourceerrors.source_exists', locale=locale)
             )
 
         guild.channels.append(SourceChannel(id=source.id, name=source.name))
         await guild.save()
 
         await inter.edit_original_response(
-            content=i18n.t('success.source_added',
+            content=i18n.t('source.success.source_added',
                 locale=locale, channel=source.mention)
         )
 
@@ -103,12 +103,12 @@ class Source(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content=i18n.t('errors.guild_not_found', locale=locale)
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
 
         if not guild.channels:
             return await inter.edit_original_response(
-                content=i18n.t('errors.no_links', locale=locale)
+                content=i18n.t('source.errors.no_links', locale=locale)
             )
 
         def build_ascii_tree(source: str, targets: list[str] = None):
@@ -130,7 +130,7 @@ class Source(commands.Cog):
         if descriptions:
             result = '\n\n'.join(descriptions)
         else:
-            result = i18n.t('errors.no_links_available', locale=locale)
+            result = i18n.t('source.errors.no_links_available', locale=locale)
 
         await inter.edit_original_response(content=f'```\n{result}\n```')
 
@@ -164,12 +164,12 @@ class Source(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content=i18n.t('errors.guild_not_found', locale=locale)
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
 
         if not guild.channels:
             return await inter.edit_original_response(
-                content=i18n.t('errors.no_links', locale=locale)
+                content=i18n.t('source.errors.no_links', locale=locale)
             )
 
         channel_to_remove = next(
@@ -178,7 +178,7 @@ class Source(commands.Cog):
 
         if not channel_to_remove:
             return await inter.edit_original_response(
-                content=i18n.t('errors.source_not_found', locale=locale)
+                content=i18n.t('source.errors.source_not_found', locale=locale)
             )
 
         guild.channels.remove(channel_to_remove)
@@ -186,7 +186,7 @@ class Source(commands.Cog):
 
         await inter.edit_original_response(
             content=i18n.t(
-                'success.source_removed',
+                'source.success.source_removed',
                 locale=locale, channel_id=channel_to_remove.id
             )
         )

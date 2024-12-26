@@ -37,7 +37,7 @@ class WhiteList(commands.Cog):
 
         if isinstance(error, commands.MissingPermissions):
             return await inter.response.send_message(
-                i18n.t('errors.missing_permissions', locale=locale),
+                i18n.t('global.errors.forbidden', locale=locale),
                 ephemeral=True)
 
     @whitelist.sub_command(
@@ -70,21 +70,23 @@ class WhiteList(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content=i18n.t('errors.guild_not_found', locale=locale)
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
 
         existing_guild_ids = {element.id for element in guild.whitelist}
         if guild_id in existing_guild_ids:
             return await inter.edit_original_response(
                 content=i18n.t(
-                    'errors.guild_already_in_whitelist', locale=locale
+                    'whitelist.errors.guild_already_in_whitelist',
+                    locale=locale
                 )
             )
 
         guilds = {guild.id for guild in self.bot.guilds}
         if guild_id not in guilds:
             return await inter.edit_original_response(
-                content=i18n.t("errors.bot_not_present", locale=locale)
+                content=i18n.t('whitelist.errors.bot_not_present',
+                               locale=locale)
             )
 
         guild_obj = self.bot.get_guild(guild_id)
@@ -95,7 +97,7 @@ class WhiteList(commands.Cog):
         await guild.save()
 
         return await inter.edit_original_response(
-            content=i18n.t("success.guild_update", locale=locale)
+            content=i18n.t('whitelist.success.guild_added', locale=locale)
         )
 
     @whitelist.sub_command(
@@ -117,7 +119,7 @@ class WhiteList(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content=i18n.t('errors.guild_not_found', locale=locale)
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
 
         description: str = ''
@@ -125,14 +127,15 @@ class WhiteList(commands.Cog):
 
         if not whitelist:
             return await inter.edit_original_response(
-                content=i18n.t('errors.whitelist_empty', locale=locale)
+                content=i18n.t('whitelist.errors.whitelist_empty',
+                               locale=locale)
             )
 
         for i, element in enumerate(whitelist):
             description += f'`#{i + 1}` {element.name} ({element.id})\n'
 
         embed = disnake.Embed(
-            title=i18n.t('info.current_whitelist', locale=locale),
+            title=i18n.t('whitelist.info.current_whitelist', locale=locale),
             description=description, colour=0x2b2d31
         )
 
@@ -168,7 +171,7 @@ class WhiteList(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content=i18n.t('errors.guild_not_found', locale=locale)
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
 
         whitelist = guild.whitelist
@@ -179,9 +182,11 @@ class WhiteList(commands.Cog):
                 await guild.save()
 
                 return await inter.edit_original_response(
-                    content=i18n.t('success.guild_removed', locale=locale)
+                    content=i18n.t('whitelist.success.guild_removed',
+                                   locale=locale)
                 )
 
         await inter.edit_original_response(
-            content=i18n.t('errors.guild_not_in_whitelist', locale=locale)
+            content=i18n.t('whitelist.errors.guild_not_in_whitelist',
+                           locale=locale)
         )

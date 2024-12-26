@@ -35,7 +35,7 @@ class Target(commands.Cog):
 
         if isinstance(error, commands.MissingPermissions):
             return await inter.response.send_message(
-                i18n.t('errors.missing_permissions', locale=locale),
+                i18n.t('global.errors.forbidden', locale=locale),
                 ephemeral=True)
 
     @target.sub_command(
@@ -118,7 +118,7 @@ class Target(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content=i18n.t('errors.guild_not_found', locale=locale)
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
 
         source_channel = next(
@@ -127,7 +127,7 @@ class Target(commands.Cog):
 
         if not source_channel:
             return await inter.edit_original_response(
-                content=i18n.t('errors.source_not_found', locale=locale)
+                content=i18n.t('source.errors.source_not_found', locale=locale)
             )
 
         target_channel = None
@@ -138,7 +138,8 @@ class Target(commands.Cog):
 
         except (ValueError, disnake.NotFound):
             return await inter.edit_original_response(
-                content=i18n.t('errors.invalid_target_channel', locale=locale)
+                content=i18n.t('target.errors.invalid_target_channel',
+                               locale=locale)
             )
 
         allowed_extensions_list = (
@@ -148,7 +149,7 @@ class Target(commands.Cog):
 
         if any(t.id == target_channel.id for t in source_channel.targets):
             return await inter.edit_original_response(
-                content=i18n.t("errors.target_exists", locale=locale)
+                content=i18n.t('target.errors.target_exists', locale=locale)
             )
 
         if target_channel.guild.id != inter.guild.id:
@@ -169,7 +170,7 @@ class Target(commands.Cog):
 
         return await inter.edit_original_response(
             content=i18n.t(
-                "success.target_added",
+                'target.success.target_added',
                 locale=locale,
                 target=target_display,
                 source_id=source_channel.id
@@ -231,7 +232,7 @@ class Target(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content=i18n.t('errors.guild_not_found', locale=locale)
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
 
         source_channel = next(
@@ -240,7 +241,7 @@ class Target(commands.Cog):
 
         if not source_channel:
             return await inter.edit_original_response(
-                content=i18n.t('errors.source_not_found', locale=locale)
+                content=i18n.t('source.errors.source_not_found', locale=locale)
             )
 
         target_channel = next(
@@ -249,7 +250,7 @@ class Target(commands.Cog):
 
         if not target_channel:
             return await inter.edit_original_response(
-                content=i18n.t('errors.target_not_found', locale=locale)
+                content=i18n.t('target.errors.target_not_found', locale=locale)
             )
 
         settings = target_channel.settings
@@ -350,7 +351,7 @@ class Target(commands.Cog):
         guild = await get_guild_model(inter.guild.id)
         if not guild:
             return await inter.edit_original_response(
-                content=i18n.t('errors.guild_not_found', locale=locale)
+                content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
 
         source_channel = next(
@@ -359,7 +360,7 @@ class Target(commands.Cog):
 
         if not source_channel:
             return await inter.edit_original_response(
-                content=i18n.t('errors.source_not_found', locale=locale)
+                content=i18n.t('source.errors.source_not_found', locale=locale)
             )
 
         target_channel = next(
@@ -368,7 +369,7 @@ class Target(commands.Cog):
 
         if not target_channel:
             return await inter.edit_original_response(
-                content=i18n.t('errors.target_not_found', locale=locale)
+                content=i18n.t('target.errors.target_not_found', locale=locale)
             )
 
         source_channel.targets.remove(target_channel)
@@ -376,7 +377,7 @@ class Target(commands.Cog):
 
         return await inter.edit_original_response(
             content=i18n.t(
-                'success.target_removed',
+                'target.success.target_removed',
                 locale=locale,
                 target_name=target_channel.name,
                 target_id=target_channel.id,
