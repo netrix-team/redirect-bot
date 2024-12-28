@@ -176,7 +176,7 @@ class Target(commands.Cog):
                 source_id=source_channel.id
             )
         )
-    
+
         whitelist_ids = {guild.id for guild in guild.whitelist}
         if target_channel.guild.id not in whitelist_ids:
             await inter.followup.send(

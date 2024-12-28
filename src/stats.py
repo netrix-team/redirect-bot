@@ -52,7 +52,7 @@ class Stats(commands.Cog):
                 value=f'```{value}```',
                 inline=True
             )
-            
+
         emb.set_thumbnail(
             url=self.bot.user.avatar.url
             if self.bot.user.avatar else None
@@ -65,7 +65,7 @@ class Stats(commands.Cog):
                 username=inter.author.display_name
             ),
 
-            icon_url=inter.author.avatar.url 
+            icon_url=inter.author.avatar.url
             if inter.author.avatar else None
         )
 
