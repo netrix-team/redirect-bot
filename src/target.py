@@ -168,7 +168,7 @@ class Target(commands.Cog):
         ))
         await guild.save()
 
-        return await inter.edit_original_response(
+        await inter.edit_original_response(
             content=i18n.t(
                 'target.success.target_added',
                 locale=locale,
@@ -176,6 +176,17 @@ class Target(commands.Cog):
                 source_id=source_channel.id
             )
         )
+    
+        whitelist_ids = {guild.id for guild in guild.whitelist}
+        if target_channel.guild.id not in whitelist_ids:
+            await inter.followup.send(
+                content=i18n.t(
+                    'target.info.reminder',
+                    locale=locale,
+                    guild_id=target_channel.guild.id
+                ),
+                ephemeral=True
+            )
 
     @target_add.autocomplete('source')
     async def target_add_autocomplete(

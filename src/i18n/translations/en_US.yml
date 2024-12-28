@@ -25,6 +25,9 @@ target:
     target_exists: '📛 Target channel already exists in the database'
     target_not_found: '📛 Target channel not found in the database'
 
+  info:
+    reminder: "📌 Don't forget to add the target server (`%{guild_id}`) to the whitelist"
+
   success:
     target_added: '✅ Successfully added target channel %{target} to source channel <#%{source_id}>'
     target_removed: '✅ Successfully removed target channel **%{target_name}** (`%{target_id}`) from source channel <#%{source_id}>'
@@ -43,3 +46,13 @@ whitelist:
   success:
     guild_added: '✅ Guild successfully added to the whitelist'
     guild_removed: '✅ Guild successfully removed from the whitelist'
+
+stats:
+  info:
+    title: 'Statistics'
+    guilds: 'Guilds'
+    channels: 'Channels'
+    members: 'Members'
+    created_at: 'Bot created'
+    developer: 'Developer'
+    requested_by: 'Requested by %{username}'

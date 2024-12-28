@@ -59,6 +59,9 @@
     "SOURCE_REMOVE_COMMAND_NAME": "remove",
     "SOURCE_REMOVE_COMMAND_DESCRIPTION": "Remove a source channel.",
     "SOURCE_REMOVE_PARAM_SOURCE_NAME": "source",
-    "SOURCE_REMOVE_PARAM_SOURCE_DESCRIPTION": "Source channel to remove."
+    "SOURCE_REMOVE_PARAM_SOURCE_DESCRIPTION": "Source channel to remove.",
+
+    "STATS_COMMAND_NAME": "stats",
+    "STATS_COMMAND_DESCRIPTION": "View bot statistics."
 }
   

@@ -3,7 +3,7 @@ from disnake.ext import commands
 from .source import Source
 from .target import Target
 
-from .owner import ForOwner
+from .stats import Stats
 from .whitelist import WhiteList
 
 from .gHandler import GuildHandler
@@ -15,7 +15,7 @@ def setup(bot: commands.InteractionBot):
     bot.add_cog(Source(bot))
     bot.add_cog(Target(bot))
 
-    bot.add_cog(ForOwner(bot))
+    bot.add_cog(Stats(bot))
     bot.add_cog(WhiteList(bot))
 
     bot.add_cog(GuildHandler(bot))

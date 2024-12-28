@@ -59,5 +59,8 @@
     "SOURCE_REMOVE_COMMAND_NAME": "remove",
     "SOURCE_REMOVE_COMMAND_DESCRIPTION": "Удалить исходный канал.",
     "SOURCE_REMOVE_PARAM_SOURCE_NAME": "source",
-    "SOURCE_REMOVE_PARAM_SOURCE_DESCRIPTION": "Исходный канал, который нужно удалить."
+    "SOURCE_REMOVE_PARAM_SOURCE_DESCRIPTION": "Исходный канал, который нужно удалить.",
+
+    "STATS_COMMAND_NAME": "stats",
+    "STATS_COMMAND_DESCRIPTION": "Просмотр статистики бота."
 }
