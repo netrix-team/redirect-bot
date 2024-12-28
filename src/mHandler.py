@@ -118,5 +118,12 @@ class MessageHandler(commands.Cog):
         if message.embeds:
             send_args['embeds'] = [embed.copy() for embed in message.embeds]
 
-        # Sending a message
-        await target_channel.send(**send_args)
+        if not send_args:
+            return
+
+        try:
+            # Sending a message
+            await target_channel.send(**send_args)
+
+        except disnake.errors.HTTPException as ext:
+            print(f'Failed to send a message in {target_channel.id}: {ext}')
