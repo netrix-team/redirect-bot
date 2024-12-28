@@ -26,7 +26,7 @@ target:
     target_not_found: '📛 Target channel not found in the database'
 
   info:
-    reminder: "📌 Don't forget to add the target server (`%{guild_id}`) to the whitelist"
+    reminder: "📌 Don't forget to add the source server %{source} to the whitelist of the target server %{target}"
 
   success:
     target_added: '✅ Successfully added target channel %{target} to source channel <#%{source_id}>'

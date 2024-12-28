@@ -186,7 +186,8 @@ class Target(commands.Cog):
                     content=i18n.t(
                         'target.info.reminder',
                         locale=locale,
-                        guild_id=target_channel.guild.id
+                        source=inter.guild.name,
+                        target=target_channel.guild.name
                     ),
                     ephemeral=True
                 )
@@ -327,7 +328,7 @@ class Target(commands.Cog):
 
     @target.sub_command(
         name=Localized(
-            string='name',
+            string='remove',
             key='TARGET_REMOVE_COMMAND_NAME'
         ),
         description=Localized(
