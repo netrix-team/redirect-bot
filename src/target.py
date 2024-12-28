@@ -177,16 +177,19 @@ class Target(commands.Cog):
             )
         )
 
-        whitelist_ids = {guild.id for guild in guild.whitelist}
-        if target_channel.guild.id not in whitelist_ids:
-            await inter.followup.send(
-                content=i18n.t(
-                    'target.info.reminder',
-                    locale=locale,
-                    guild_id=target_channel.guild.id
-                ),
-                ephemeral=True
-            )
+        if target_channel.guild.id != inter.guild.id:
+            guild = await get_guild_model(target_channel.guild.id)
+            whitelist_ids = {guild.id for guild in guild.whitelist}
+
+            if inter.guild.id not in whitelist_ids:
+                await inter.followup.send(
+                    content=i18n.t(
+                        'target.info.reminder',
+                        locale=locale,
+                        guild_id=target_channel.guild.id
+                    ),
+                    ephemeral=True
+                )
 
     @target_add.autocomplete('source')
     async def target_add_autocomplete(
