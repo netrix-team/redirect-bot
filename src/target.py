@@ -14,7 +14,9 @@ class Target(commands.Cog):
     def __init__(self, bot: commands.InteractionBot):
         self.bot = bot
 
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(
+        administrator=True
+    )
     @commands.slash_command(
         name=Localized(
             string='target',
@@ -119,6 +121,16 @@ class Target(commands.Cog):
         if not guild:
             return await inter.edit_original_response(
                 content=i18n.t('global.errors.guild_not_found', locale=locale)
+            )
+        
+        try:
+            guild_id = int(guild_id)
+        except ValueError:
+            return await inter.edit_original_response(
+                content=i18n.t(
+                    'global.errors.invalid_guild_id',
+                    locale=locale
+                )
             )
 
         source_channel = next(

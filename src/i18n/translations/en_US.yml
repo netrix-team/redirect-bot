@@ -2,6 +2,7 @@ global:
   errors:
     forbidden: '📛 This command is not available to you!'
     guild_not_found: '📛 Guild not found in the database'
+    invalid_guild_id: '📛 Invalid guild ID'
 
   success:
     completed: '✅ Operation successfully completed'
