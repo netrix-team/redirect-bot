@@ -6,5 +6,6 @@ exclude =
     venv/,
     tests/,
     *tests*.py
+    migrations
 
 ignore = E128, E125, E203, E701, E402, W504, E124, W503, E131

@@ -1,3 +1,4 @@
+import re
 import asyncio
 
 import disnake
@@ -5,6 +6,7 @@ from disnake.ext import commands
 
 from .db.func import get_guild_model
 
+MAX_MESSAGE_LENGTH = 2000
 # (10MB = 10 * 1024 * 1024 B)
 DISCORD_MAX_FILE_SIZE = 10 * 1024 * 1024
 
@@ -102,11 +104,20 @@ class MessageHandler(commands.Cog):
         Logic of message processing
         Forwarding messages to other channels
         """
+        target_guild_emojis = {emoji.name: emoji for emoji
+                               in target_channel.guild.emojis}
+
+        new_content = self.replace_emojis_in_text(
+            content=message.content, emojis=target_guild_emojis)
+
+        new_content = self.format_message_content(
+            content=new_content, jump_url=message.jump_url)
+
         send_args = {}
 
         # Sending text
-        if message.content:
-            send_args['content'] = message.content
+        if new_content:
+            send_args['content'] = new_content
 
         # File preparation
         if attachments:
@@ -127,3 +138,51 @@ class MessageHandler(commands.Cog):
 
         except disnake.errors.HTTPException as ext:
             print(f'Failed to send a message in {target_channel.id}: {ext}')
+
+    def replace_emojis_in_text(
+        self,
+        content: str,
+        emojis: dict[str, disnake.Emoji]
+    ) -> str:
+        """
+        Replaces emojis in the text with
+        their corresponding guild-specific emojis
+        """
+        def replace_emojis(match: re.Match) -> str:
+            emoji_name = match.group(1)
+            if emoji_name in emojis:
+                return f'<:{emoji_name}:{emojis[emoji_name].id}>'
+            return match.group(0)
+
+        emoji_pattern = r'<:([a-zA-Z0-9_]+):\d+>'
+        return re.sub(emoji_pattern, replace_emojis, content)
+
+    def format_message_content(self, content: str, jump_url: str) -> str:
+        """
+        Formats the message content to ensure
+        it meets Discord's length constraints
+        """
+        url_length = len(jump_url)
+        if len(content) + url_length + 10 > MAX_MESSAGE_LENGTH:
+            truncation_limit = MAX_MESSAGE_LENGTH - url_length - 10
+
+            lines = content.splitlines(keepends=True)
+            truncated_content = ''
+            current_length = 0
+
+            for line in lines:
+                if current_length + len(line) > truncation_limit - 3:
+                    remaining_space = truncation_limit - 3 - current_length
+                    words = line[:remaining_space].rsplit(maxsplit=1)
+
+                    if len(words) > 1:
+                        truncated_content += words[0] + ' '
+                    break
+
+                truncated_content += line
+                current_length += len(line)
+
+            return truncated_content.rstrip() + '...' + f'\n{jump_url}'
+
+        else:
+            return content

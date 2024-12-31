@@ -122,9 +122,9 @@ class Target(commands.Cog):
             return await inter.edit_original_response(
                 content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
-        
+
         try:
-            guild_id = int(guild_id)
+            target = int(target)
         except ValueError:
             return await inter.edit_original_response(
                 content=i18n.t(

@@ -75,7 +75,7 @@ class WhiteList(commands.Cog):
             return await inter.edit_original_response(
                 content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
-        
+
         try:
             guild_id = int(guild_id)
         except ValueError:
@@ -187,7 +187,7 @@ class WhiteList(commands.Cog):
             return await inter.edit_original_response(
                 content=i18n.t('global.errors.guild_not_found', locale=locale)
             )
-        
+
         try:
             guild_id = int(guild_id)
         except ValueError:
