@@ -127,7 +127,16 @@ class MessageHandler(commands.Cog):
 
         # Sending embeds
         if message.embeds:
-            send_args['embeds'] = [embed.copy() for embed in message.embeds]
+            embeds: list[disnake.Embed] = []
+            for embed in message.embeds:
+
+                updated_embed = embed.copy()
+                if updated_embed.description:
+                    updated_embed.description = self.replace_emojis_in_text(
+                        content=embed.description, emojis=target_guild_emojis)
+
+                embeds.append(updated_embed)
+            send_args['embeds'] = embeds
 
         if not send_args:
             return
