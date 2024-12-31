@@ -1,4 +1,3 @@
-import re
 import asyncio
 
 import disnake
@@ -104,14 +103,8 @@ class MessageHandler(commands.Cog):
         Logic of message processing
         Forwarding messages to other channels
         """
-        target_guild_emojis = {emoji.name: emoji for emoji
-                               in target_channel.guild.emojis}
-
-        new_content = self.replace_emojis_in_text(
-            content=message.content, emojis=target_guild_emojis)
-
         new_content = self.format_message_content(
-            content=new_content, jump_url=message.jump_url)
+            content=message.content, jump_url=message.jump_url)
 
         send_args = {}
 
@@ -127,16 +120,7 @@ class MessageHandler(commands.Cog):
 
         # Sending embeds
         if message.embeds:
-            embeds: list[disnake.Embed] = []
-            for embed in message.embeds:
-
-                updated_embed = embed.copy()
-                if updated_embed.description:
-                    updated_embed.description = self.replace_emojis_in_text(
-                        content=embed.description, emojis=target_guild_emojis)
-
-                embeds.append(updated_embed)
-            send_args['embeds'] = embeds
+            send_args['embeds'] = [embed.copy() for embed in message.embeds]
 
         if not send_args:
             return
@@ -147,24 +131,6 @@ class MessageHandler(commands.Cog):
 
         except disnake.errors.HTTPException as ext:
             print(f'Failed to send a message in {target_channel.id}: {ext}')
-
-    def replace_emojis_in_text(
-        self,
-        content: str,
-        emojis: dict[str, disnake.Emoji]
-    ) -> str:
-        """
-        Replaces emojis in the text with
-        their corresponding guild-specific emojis
-        """
-        def replace_emojis(match: re.Match) -> str:
-            emoji_name = match.group(1)
-            if emoji_name in emojis:
-                return f'<:{emoji_name}:{emojis[emoji_name].id}>'
-            return match.group(0)
-
-        emoji_pattern = r'<:([a-zA-Z0-9_]+):\d+>'
-        return re.sub(emoji_pattern, replace_emojis, content)
 
     def format_message_content(self, content: str, jump_url: str) -> str:
         """
