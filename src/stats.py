@@ -43,11 +43,11 @@ class Stats(commands.Cog):
                 'stats.info.title',
                 locale=locale
             ),
-            colour=0x7f3bf5,
             description=f'> **{i18n.t(
                 'stats.info.top_guilds',
                 locale=locale
-            )}**' + f'\n```\n{top_guilds_info}\n```'
+            )}**' + f'\n```\n{top_guilds_info}\n```',
+            colour=0x7f3bf5
         )
 
         fields = [
