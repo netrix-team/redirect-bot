@@ -56,4 +56,5 @@ stats:
     members: 'Members'
     created_at: 'Bot created'
     developer: 'Developer'
+    top_guilds: 'Top Guilds'
     requested_by: 'Requested by %{username}'

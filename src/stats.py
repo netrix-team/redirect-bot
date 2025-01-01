@@ -30,12 +30,24 @@ class Stats(commands.Cog):
         channels = sum(len(guild.channels) for guild in guilds)
         created_at = self.bot.user.created_at.strftime('%Y-%m-%d %H:%M:%S')
 
+        top_guilds = sorted(
+            guilds, key=lambda g: g.member_count, reverse=True)[:5]
+
+        top_guilds_info = '\n'.join([
+            f'#{index + 1} {guild.name} - {guild.member_count} members'
+            for index, guild in enumerate(top_guilds)
+        ])
+
         emb = disnake.Embed(
             title=i18n.t(
                 'stats.info.title',
                 locale=locale
             ),
-            colour=0x7f3bf5
+            colour=0x7f3bf5,
+            description=f'> **{i18n.t(
+                'stats.info.top_guilds',
+                locale=locale
+            )}**' + f'\n```\n{top_guilds_info}\n```'
         )
 
         fields = [

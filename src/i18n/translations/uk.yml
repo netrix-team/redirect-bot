@@ -56,4 +56,5 @@ stats:
     members: 'Учасників'
     created_at: 'Бота створено'
     developer: 'Розробник'
+    top_guilds: 'Топ серверів'
     requested_by: 'Запитано %{username}'
